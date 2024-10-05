@@ -1,303 +1,400 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chat Redirect</title>
 
     <!-- Include intl-tel-input CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css"
+    />
 
     <!-- Custom CSS -->
     <style>
-        /* General Styles */
+      /* General Styles */
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #e9f5ff;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        transition: background-color 0.3s ease;
+      }
+
+      .container {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        width: 100%;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      h1 {
+        text-align: center;
+        color: #0056b3;
+        margin-bottom: 20px;
+        font-size: 24px;
+        transition: color 0.3s ease;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+        position: relative; /* Ensure dropdown is positioned relative to this container */
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+        color: #555;
+        font-weight: bold;
+        transition: color 0.3s ease;
+      }
+
+      input[type="tel"] {
+        width: 100%;
+        height: 40px;
+        max-width: 400px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        transition: border-color 0.3s ease, background-color 0.3s ease,
+          color 0.3s ease;
+      }
+
+      input[type="tel"]:focus {
+        border-color: #007bff;
+        outline: none;
+      }
+
+      input[type="tel"]:hover {
+        border-color: #007bff;
+      }
+      .iti {
+        display: block;
+      }
+
+      .iti__dropdown {
+        background-color: #ffffff !important; /* Light background */
+        border: 1px solid #ccc !important; /* Light border */
+        border-radius: 4px; /* Rounded corners */
+      }
+
+      /* Country List Styles for Light Mode */
+      .iti__country-list {
+        /* background-color: #ffffff !important; /* Light background for country list */
+        /*color: #000000 !important; /* Black text color for country list items */
+        max-width: 400px;
+        /*border-radius: 4px; /* Rounded corners */
+        /*border: 1px solid #ccc !important; /* Light border */
+
+      }
+
+      .iti__country{
+        max-width: 400px;
+      }
+
+      button {
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        color: #ffffff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #4c8cff; /* Lighter hover color for button */
+      }
+
+      /* App Selector Styles */
+      .app-select-wrapper {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border: 1px solid #ccc; /* Default border color for app selector */
+        border-radius: 4px;
+        cursor: pointer;
+        position: relative;
+        background-color: #ffffff;
+        transition: border-color 0.3s ease;
+
+        max-width: 400px;
+      }
+
+      .app-select-wrapper:hover {
+        border-color: #007bff; /* Border color on hover for app selector */
+      }
+
+      .app-icon {
+        width: 24px;
+        height: 24px;
+        margin-right: 10px;
+      }
+
+      .app-selected {
+        flex-grow: 1;
+      }
+
+      /* App Dropdown Styles */
+      .app-dropdown {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: #2c2c2c; /* Dark background for dropdown */
+        border: 1px solid #444; /* Dark border color for dropdown */
+        border-radius: 4px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+      }
+
+      .app-dropdown div {
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        color: #ffffff; /* White text for dropdown items */
+      }
+
+      .app-dropdown div:hover {
+        background-color: #444; /* Darker background color on hover */
+      }
+
+      /* Dark Mode Styles */
+      @media (prefers-color-scheme: dark) {
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #e9f5ff;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            transition: background-color 0.3s ease;
+          background-color: #121212;
         }
 
         .container {
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            width: 100%;
-            transition: background-color 0.3s ease, color 0.3s ease;
+          background-color: #1e1e1e;
+          color: #ffffff;
         }
 
         h1 {
-            text-align: center;
-            color: #0056b3;
-            margin-bottom: 20px;
-            font-size: 24px;
-            transition: color 0.3s ease;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-            position: relative; /* Ensure dropdown is positioned relative to this container */
+          color: #bb86fc;
         }
 
         label {
-            display: block;
-            margin-bottom: 5px;
-            color: #555;
-            font-weight: bold;
-            transition: color 0.3s ease;
+          color: #e0e0e0;
         }
 
-        input[type="tel"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc; /* Default border color for contact info */
-            border-radius: 4px;
-            box-sizing: border-box;
-            transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+        input[type="tel"],
+        .app-select-wrapper {
+          background-color: #2c2c2c;
+          border: 1px solid #444; /* Border color for dark mode */
+          color: #ffffff;
         }
 
         input[type="tel"]:focus {
-            border-color: #007bff; /* Border color on focus for contact info */
-            outline: none;
+          border-color: #bb86fc; /* Border color on focus for contact info in dark mode */
         }
 
         input[type="tel"]:hover {
-            border-color: #007bff; /* Hover border color for contact info */
+          border-color: #bb86fc; /* Hover border color for input in dark mode */
         }
 
         button {
-            width: 100%;
-            padding: 10px;
-            background-color: #007bff;
-            color: #ffffff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
+          background-color: #6200ee; /* Default button color in dark mode */
         }
 
         button:hover {
-            background-color: #4c8cff; /* Lighter hover color for button */
-        }
-
-        /* App Selector Styles */
-        .app-select-wrapper {
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            border: 1px solid #ccc; /* Default border color for app selector */
-            border-radius: 4px;
-            cursor: pointer;
-            position: relative;
-            background-color: #ffffff;
-            transition: border-color 0.3s ease;
+          background-color: #7a4bd8; /* Lighter hover color for button in dark mode */
         }
 
         .app-select-wrapper:hover {
-            border-color: #007bff; /* Border color on hover for app selector */
+          border-color: #bb86fc;
         }
 
-        .app-icon {
-            width: 24px;
-            height: 24px;
-            margin-right: 10px;
-        }
-
-        .app-selected {
-            flex-grow: 1;
-        }
-
+        /* App Dropdown Styles (Dark Mode) */
         .app-dropdown {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background-color: #ffffff;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
+          background-color: #2c2c2c; /* Ensure dark background in dark mode */
+          border: 1px solid #444; /* Ensure dark border in dark mode */
         }
 
         .app-dropdown div {
-            padding: 10px;
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
+          color: #ffffff; /* Ensure white text in dark mode */
         }
 
         .app-dropdown div:hover {
-            background-color: #f4f4f9;
+          background-color: #444; /* Ensure hover color is darker for readability */
+        }
+        
+        .iti--separate-dial-code .iti__selected-flag{
+            background-color: #383838
+        }
+        .iti__country-list {
+          background-color: #2c2c2c !important; /* Dark background for country list */
+          color: #ffffff !important; /* White text color for country list items */
         }
 
-        /* Dark Mode Styles */
-        @media (prefers-color-scheme: dark) {
-            body {
-                background-color: #121212;
-            }
-
-            .container {
-                background-color: #1e1e1e;
-                color: #ffffff;
-            }
-
-            h1 {
-                color: #bb86fc;
-            }
-
-            label {
-                color: #e0e0e0;
-            }
-
-            input[type="tel"], .app-select-wrapper {
-                background-color: #2c2c2c;
-                border: 1px solid #444; /* Border color for dark mode */
-                color: #ffffff;
-            }
-
-            input[type="tel"]:focus {
-                border-color: #bb86fc; /* Border color on focus for contact info in dark mode */
-            }
-
-            input[type="tel"]:hover {
-                border-color: #bb86fc; /* Hover border color for input in dark mode */
-            }
-
-            button {
-                background-color: #6200ee; /* Default button color in dark mode */
-            }
-
-            button:hover {
-                background-color: #7a4bd8; /* Lighter hover color for button in dark mode */
-            }
-
-            .app-select-wrapper:hover {
-                border-color: #bb86fc;
-            }
-
-            .app-dropdown {
-                background-color: #2c2c2c;
-                border: 1px solid #444; /* Border color for dropdown in dark mode */
-            }
-
-            .app-dropdown div {
-                color: #ffffff;
-            }
-
-            .app-dropdown div:hover {
-                background-color: #444; /* Hover color for dropdown items in dark mode */
-            }
+        .iti__country-list li {
+          color: #ffffff !important; /* Ensure text is white */
         }
+
+        .iti__country-list li:hover {
+          background-color: #444 !important; /* Darker background color on hover */
+        }
+
+        /* Dropdown styles */
+        .iti__dropdown {
+          background-color: #2c2c2c !important; /* Dark background */
+          border: 1px solid #444 !important; /* Dark border */
+          border-radius: 4px; /* Rounded corners */
+        }
+
+        /* Country List Styles for Dark Mode */
+        .iti__country-list {
+          background-color: #2c2c2c !important; /* Dark background for country list */
+          color: #ffffff !important; /* White text color for country list items */
+          border-radius: 4px; /* Rounded corners */
+          border: 1px solid #444 !important; /* Dark border */
+        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <h1>Chat Redirect</h1>
-        <form onsubmit="event.preventDefault(); openChatInNewTab();">
-            <!-- App Selector -->
-            <div class="form-group">
-                <label for="app-select">Choose App:</label>
-                <div class="app-select-wrapper" onclick="toggleDropdown()">
-                    <img id="app-icon" class="app-icon" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="App Icon">
-                    <span id="app-selected" class="app-selected">WhatsApp</span>
-                </div>
-                <div id="app-dropdown" class="app-dropdown">
-                    <div data-value="whatsapp" onclick="selectApp('whatsapp')">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" class="app-icon" alt="WhatsApp Icon"> WhatsApp
-                    </div>
-                    <div data-value="telegram" onclick="selectApp('telegram')">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" class="app-icon" alt="Telegram Icon"> Telegram
-                    </div>
-                    <div data-value="message" onclick="selectApp('message')">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/IMessage_logo.svg" class="app-icon" alt="Message Icon"> Message
-                    </div>
-                </div>
+      <h1>Chat Redirect</h1>
+      <form onsubmit="event.preventDefault(); openChatInNewTab();">
+        <!-- App Selector -->
+        <div class="form-group">
+          <label for="app-select">Choose App:</label>
+          <div class="app-select-wrapper" onclick="toggleDropdown()">
+            <img
+              id="app-icon"
+              class="app-icon"
+              src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+              alt="App Icon"
+            />
+            <span id="app-selected" class="app-selected">WhatsApp</span>
+          </div>
+          <div id="app-dropdown" class="app-dropdown">
+            <div data-value="whatsapp" onclick="selectApp('whatsapp')">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+                class="app-icon"
+                alt="WhatsApp Icon"
+              />
+              WhatsApp
             </div>
+            <div data-value="telegram" onclick="selectApp('telegram')">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg"
+                class="app-icon"
+                alt="Telegram Icon"
+              />
+              Telegram
+            </div>
+            <div data-value="message" onclick="selectApp('message')">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/5/51/IMessage_logo.svg"
+                class="app-icon"
+                alt="Message Icon"
+              />
+              Message
+            </div>
+          </div>
+        </div>
 
-            <!-- Phone Number Input with Country Code -->
-            <div class="form-group">
-                <label for="phone-number">Contact Info:</label>
-                <input type="tel" id="phone-number" placeholder="Enter your contact info" required>
-            </div>
-            
-            <!-- Button -->
-            <button type="submit">Beam Me Up, Scotty!</button> <!-- Changed button text -->
-        </form>
+        <!-- Phone Number Input with Country Code -->
+        <div class="form-group">
+          <label for="phone-number">Contact Info:</label>
+          <input
+            type="tel"
+            id="phone-number"
+            placeholder="Enter the phone number"
+            required
+          />
+        </div>
+
+        <!-- Button -->
+        <button type="submit">Open a chat!</button>
+        <!-- Changed button text -->
+      </form>
     </div>
 
     <!-- Include intl-tel-input JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
     <script>
-        // Initialize the phone number input with intl-tel-input
-        const phoneInput = document.querySelector("#phone-number");
-        const iti = window.intlTelInput(phoneInput, {
-            initialCountry: "es", // Set default country to Spain
-            preferredCountries: ["es", "us", "gb", "de", "in"],
-            separateDialCode: true, // Show the country code separately
-            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"
-        });
+      // Initialize the phone number input with intl-tel-input
+      const phoneInput = document.querySelector("#phone-number");
+      const iti = window.intlTelInput(phoneInput, {
+        initialCountry: "es", // Set default country to Spain
+        preferredCountries: ["es", "us", "gb", "de", "in"],
+        separateDialCode: true, // Show the country code separately
+        utilsScript:
+          "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js",
+      });
 
-        // Toggle dropdown visibility
-        function toggleDropdown() {
-            const dropdown = document.getElementById("app-dropdown");
-            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+      // Toggle dropdown visibility
+      function toggleDropdown() {
+        const dropdown = document.getElementById("app-dropdown");
+        dropdown.style.display =
+          dropdown.style.display === "block" ? "none" : "block";
+      }
+
+      // Select app from dropdown
+      function selectApp(app) {
+        const appIcon = document.querySelector("#app-icon");
+        const appSelected = document.querySelector("#app-selected");
+        const dropdown = document.getElementById("app-dropdown");
+
+        if (app === "whatsapp") {
+          appIcon.src =
+            "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg";
+          appSelected.textContent = "WhatsApp";
+        } else if (app === "telegram") {
+          appIcon.src =
+            "https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg";
+          appSelected.textContent = "Telegram";
+        } else if (app === "message") {
+          appIcon.src =
+            "https://upload.wikimedia.org/wikipedia/commons/5/51/IMessage_logo.svg";
+          appSelected.textContent = "Message";
         }
 
-        // Select app from dropdown
-        function selectApp(app) {
-            const appIcon = document.querySelector("#app-icon");
-            const appSelected = document.querySelector("#app-selected");
-            const dropdown = document.getElementById("app-dropdown");
+        dropdown.style.display = "none"; // Hide dropdown after selection
+      }
 
-            if (app === "whatsapp") {
-                appIcon.src = "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg";
-                appSelected.textContent = "WhatsApp";
-            } else if (app === "telegram") {
-                appIcon.src = "https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg";
-                appSelected.textContent = "Telegram";
-            } else if (app === "message") {
-                appIcon.src = "https://upload.wikimedia.org/wikipedia/commons/5/51/IMessage_logo.svg";
-                appSelected.textContent = "Message";
-            }
+      // Open chat app in a new tab based on selection
+      function openChatInNewTab() {
+        const phoneNumber = iti.getNumber(); // Get the full international number
+        const appSelected = document.querySelector("#app-selected").textContent; // Get the selected app
 
-            dropdown.style.display = "none"; // Hide dropdown after selection
+        let chatUrl;
+
+        if (appSelected === "WhatsApp") {
+          chatUrl = `https://wa.me/${phoneNumber}`;
+        } else if (appSelected === "Telegram") {
+          chatUrl = `https://t.me/${phoneNumber}`; // Telegram uses a different format
+        } else if (appSelected === "Message") {
+          chatUrl = `sms://${phoneNumber}`; // message redirects using the message protocol
         }
 
-        // Open chat app in a new tab based on selection
-        function openChatInNewTab() {
-            const phoneNumber = iti.getNumber(); // Get the full international number
-            const appSelected = document.querySelector("#app-selected").textContent; // Get the selected app
+        window.open(chatUrl, "_blank"); // Open in a new tab
+      }
 
-            let chatUrl;
-
-            if (appSelected === "WhatsApp") {
-                chatUrl = `https://wa.me/${phoneNumber}`;
-            } else if (appSelected === "Telegram") {
-                chatUrl = `https://t.me/${phoneNumber}`; // Telegram uses a different format
-            } else if (appSelected === "Message") {
-                chatUrl = `sms://${phoneNumber}`; // message redirects using the message protocol
-            }
-
-            window.open(chatUrl, '_blank'); // Open in a new tab
+      // Close dropdown when clicking outside
+      window.onclick = function (event) {
+        if (!event.target.closest(".app-select-wrapper")) {
+          const dropdown = document.getElementById("app-dropdown");
+          dropdown.style.display = "none";
         }
-
-        // Close dropdown when clicking outside
-        window.onclick = function(event) {
-            if (!event.target.closest('.app-select-wrapper')) {
-                const dropdown = document.getElementById("app-dropdown");
-                dropdown.style.display = "none";
-            }
-        };
+      };
     </script>
-</body>
+  </body>
 </html>
