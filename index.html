@@ -283,9 +283,9 @@
             if (appSelected === "WhatsApp") {
                 chatUrl = `https://wa.me/${phoneNumber}`;
             } else if (appSelected === "Telegram") {
-                chatUrl = `https://t.me/${phoneNumber.replace(/[^\d]/g, "")}`; // Telegram uses a different format
+                chatUrl = `https://t.me/${phoneNumber}`; // Telegram uses a different format
             } else if (appSelected === "Message") {
-                chatUrl = `message://${phoneNumber}`; // message redirects using the message protocol
+                chatUrl = `sms://${phoneNumber}`; // message redirects using the message protocol
             }
 
             window.open(chatUrl, '_blank'); // Open in a new tab
