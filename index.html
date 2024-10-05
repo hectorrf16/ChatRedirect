@@ -2,7 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1"
+    />
     <title>Chat Redirect</title>
 
     <!-- Include intl-tel-input CSS -->
@@ -33,6 +36,7 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         max-width: 400px;
         width: 100%;
+        margin: 0 auto;
         transition: background-color 0.3s ease, color 0.3s ease;
       }
 
@@ -89,15 +93,10 @@
 
       /* Country List Styles for Light Mode */
       .iti__country-list {
-        /* background-color: #ffffff !important; /* Light background for country list */
-        /*color: #000000 !important; /* Black text color for country list items */
         max-width: 400px;
-        /*border-radius: 4px; /* Rounded corners */
-        /*border: 1px solid #ccc !important; /* Light border */
-
       }
 
-      .iti__country{
+      .iti__country {
         max-width: 400px;
       }
 
@@ -232,9 +231,9 @@
         .app-dropdown div:hover {
           background-color: #444; /* Ensure hover color is darker for readability */
         }
-        
-        .iti--separate-dial-code .iti__selected-flag{
-            background-color: #383838
+
+        .iti--separate-dial-code .iti__selected-flag {
+          background-color: #383838;
         }
         .iti__country-list {
           background-color: #2c2c2c !important; /* Dark background for country list */
